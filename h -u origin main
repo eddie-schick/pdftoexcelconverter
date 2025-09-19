@@ -1,0 +1,3 @@
+* [33m1c27975[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m)[m  Initial import of Camelot-based PDF to Excel converter app  with static index.html for Vercel deployment
+* [33m208924c[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m Add static index.html for Vercel deployment
+* [33ma7ed976[m Initial commit: PDF to Excel converter app (Streamlit + Camelot)

@@ -119,6 +119,34 @@
         progressText.textContent = `${message} (${Math.round(percentage)}%)`;
       }
     }
+
+    resetUI(){
+      const fileInput = document.getElementById('pdfFile');
+      if (fileInput) {
+        fileInput.value = '';
+      }
+      const reportSelect = document.getElementById('reportType');
+      if (reportSelect) {
+        const hasDefault = Array.from(reportSelect.options).some(o => o.value === 'chart_of_accounts');
+        if (hasDefault) {
+          reportSelect.value = 'chart_of_accounts';
+        } else if (reportSelect.options.length > 0) {
+          reportSelect.selectedIndex = 0;
+        }
+      }
+      const progressBar = document.querySelector('.progress-bar');
+      if (progressBar) {
+        progressBar.style.width = '0%';
+      }
+      const progressContainer = document.querySelector('.progress-container');
+      if (progressContainer) {
+        progressContainer.setAttribute('aria-valuenow', '0');
+      }
+      const progressText = document.querySelector('.progress-text');
+      if (progressText) {
+        progressText.textContent = '';
+      }
+    }
   }
 
   document.addEventListener('DOMContentLoaded', function(){
@@ -149,7 +177,11 @@
       try {
         await converter.convert(file, reportType);
       } catch(e) { console.error(e); }
-      finally { btn.disabled = false; btn.textContent = original; }
+      finally { 
+        // Always reset to a fresh state after generation attempt completes (delay 1s)
+        setTimeout(() => { try { converter.resetUI(); } catch(_){} }, 1000);
+        btn.disabled = false; btn.textContent = original; 
+      }
     });
   });
 })();
